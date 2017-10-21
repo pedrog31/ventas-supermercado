@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var rol = sessionStorage.getItem("Rol");
 	if (nombre == null || rol == null || rol != "vendedor"){
 		alert("Debe loguearse como vendedor para poder acceder a esta página.");
-		window.location="login.html";
+		window.location="index.html";
 	}
 });
 
@@ -63,4 +63,10 @@ function updateProduct() {
 		}
 		xhr.send(data);
 	}	
+}
+
+function logout(){
+	sessionStorage.removeItem("Nombre");
+	sessionStorage.removeItem("Rol");
+	window.location="index.html";
 }

@@ -33,6 +33,9 @@ function validar(){
 				}else{
 					sessionStorage.setItem("Rol", jsonResponse.response);
 					sessionStorage.setItem("Nombre", jsonResponse.nombre);
+					sessionStorage.setItem("tipoID", jsonResponse.tipoIdentificacion);
+					sessionStorage.setItem("ID", jsonResponse.identificacion);
+					sessionStorage.setItem("descuento", jsonResponse.descuento);
 					if (jsonResponse.response == "vendedor"){
 						window.location="productos.html";
 					}else{

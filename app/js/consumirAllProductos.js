@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var rol = sessionStorage.getItem("Rol");
 	if (nombre == null || rol == null || rol == "comprador"){
 		alert("Debe loguearse como vendedor para poder acceder a esta página.");
-		window.location="login.html";
+		window.location="index.html";
 	}else{
 		$("#user").html('<i class="fa fa-fw fa-user"></i> Conectado como '+ nombre + ' - Vendedor');
 		$.ajax({
@@ -30,5 +30,5 @@ $(document).ready(function(){
 function logout(){
 	sessionStorage.removeItem("Nombre");
 	sessionStorage.removeItem("Rol");
-	window.location="login.html";
+	window.location="index.html";
 }
