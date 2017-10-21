@@ -54,7 +54,7 @@ function obtenerVentas() {
 								+    '<td>' + data[i].precio_domicio + '</td>'
 								+    '<td>' + data[i].valor_descuento + '</td>'
 								+ '<td align="center" class="dropdown">'
-				  			+ '<button id =' + i + ' type="button" onclick="generarFactura( ' + data[i].idCompra + ');" class="btn btn-default">Ver factura</button>'
+				  			+ '<button id =' + i + ' type="button" onclick="generarFactura( ' + data[i].idCompra + ');" class="btn btn-success">Ver factura</button>'
 								+ '</td>'
 								  '</tr>';
 				}
@@ -66,13 +66,13 @@ function obtenerVentas() {
 
 				var fecha = f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear() + " a las " + f.getHours() + ":" + f.getMinutes() + ". ";
 
-				info = 'Ultima actualizacion: '
+				info = '<b>Ultima actualizacion: </b>'
 						+	fecha
-						+  ' Total de ventas realizadas en el mes: '
+						+  '<br><b>Total de ventas realizadas en el mes: </b>'
 						+	i + '.'
-						+  ' Descuentos usados en el mes: '
+						+  '<br><b>Descuentos usados en el mes: </b>'
 						+  descuentos + '.';
-
+				
 				$("#info").html(info);
 			}
 				$("#info").html(info);

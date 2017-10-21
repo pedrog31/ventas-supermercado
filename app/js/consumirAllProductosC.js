@@ -37,7 +37,7 @@ function comprar(){
 		if($('#cantidadProducto'+i+'').val() > 0){
 			seleccionoProductos=true;
 			totalVenta = totalVenta + (parseInt($('#precioProducto'+i+'').text())*parseInt($('#cantidadProducto'+i+'').val()));
-			arr.push({"sku": $('#skuProducto'+i+'').text(),"cantidad": $('#cantidadProducto'+i+'').val()});
+			arr.push({"sku": $('#skuProducto'+i+'').text(),"cantidad": parseInt($('#cantidadProducto'+i+'').val())});
 		}
 	}
 	if(seleccionoProductos){
@@ -75,10 +75,8 @@ function comprar(){
 		var xhr = new XMLHttpRequest();
 		var url = "https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/ventas";
 		xhr.open("POST", url, true);
-		xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
 		xhr.onreadystatechange=function() {
 			if (xhr.readyState==4) {
-				console.log(xhr.responseText);
 				var jsonResponse = JSON.parse(xhr.responseText);
 				if (jsonResponse.response == "Fail"){
 					alert('Error: '+jsonResponse.message);
@@ -89,7 +87,7 @@ function comprar(){
 		}
 		xhr.send(data);
 		alert("Gracias por su compra, en unos minutos estaremos en su puerta.");
-		logout();
+		window.location="productosC.html";
 	}else{
 		alert("Para hacer una compra es obvio que debe seleccionar al menos un producto.");
 	}

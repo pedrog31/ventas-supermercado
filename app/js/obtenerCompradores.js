@@ -66,14 +66,16 @@ function generarCupon(tipo_identificacion, Identificacion) {
 					mymodal.find('.modal-body').text('El cupon a sido asignado exitosamente con el codigo "'
 											 + jsonResponse.codigo + '"');
 											 mymodal.modal('show');
+					window.location= "compradores.html"
 				}
 			}
 		}
 		xhr.send(data);
+
 }
 
 function logout(){
 	sessionStorage.removeItem("Nombre");
 	sessionStorage.removeItem("Rol");
-	window.location="login.html";
+	window.location="index.html";
 }
