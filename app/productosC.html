@@ -16,6 +16,7 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/buttonstyle.css" media="screen" title="no title" charset="utf-8">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -56,7 +57,9 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-          <div id="grid">Consultando productos...</div>
+		<a class="btn btn-success pull-right" href="#" onclick="comprar()"><i class="fa fa-shopping-cart"> Comprar</i></a>
+        <div id="grid">Consultando productos...</div>		  
+	</div>
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
@@ -80,12 +83,13 @@
           </div>
           <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-secondary" type="button" data-dismiss="modal" style="color:white;" href="#">Cancelar</a>
             <a class="btn btn-primary" onclick="logout()" href="#">Cerrar sesión</a>
           </div>
         </div>
       </div>
     </div>
+	
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
@@ -99,7 +103,7 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-	<script src="js/consumirAllProductosC.js"></script>
+	<script src="js/consumirAllProductosC.js"></script>		
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
   </div>
