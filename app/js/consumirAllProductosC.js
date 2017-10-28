@@ -98,4 +98,3 @@ function logout(){
 	sessionStorage.removeItem("Rol");
 	window.location="index.html";
 }
-
