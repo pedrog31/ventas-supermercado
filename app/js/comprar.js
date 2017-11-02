@@ -1,35 +1,59 @@
 $(document).ready(function(){ 
 	var nombre = sessionStorage.getItem("Nombre");
 	var rol = sessionStorage.getItem("Rol");
-	if (nombre == null || rol == null || rol == "vendedor"){
+	/*if (nombre == null || rol == null || rol == "vendedor"){
 		alert("Debe loguearse como comprador para poder acceder a esta página.");
 		window.location="index.html";
-	}else{
+	}else{*/
 		$("#user").html('<i class="fa fa-fw fa-user"></i> Conectado como '+ nombre + ' - Comprador');
-		$.ajax({
-			crossDomain: true,
-			type: 'GET',
-			url: 'https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/productos',
-			contentType: 'application/json; charset=utf-8',
-			datatype: 'jsonp',
-			success: function (data) {
-				var code = '<div class="row">';
-				sessionStorage.setItem("NumeroProductos", data.length);
-				for (i = 0; i < data.length; i++) { 
-					code = code + '<div class="col-xs-4 col-md-3"><div class="card mb-3"><a href="#"><img class="card-img-top" src="'+data[i].url_foto+'" alt="" width="30" height="200"></a><div class="card-body"><h6 class="card-title mb-1"><a href="#">'+data[i].nombre+'</a></h6><small>Sku: </small><label type="text" style="font-size: 80%;" id="skuProducto'+i+'">'+data[i].sku+'</label><br><small>Precio: </small><label type="text" style="font-size: 80%;" id="precioProducto'+i+'">'+data[i].precio+'</label><br><small>Stock: '+data[i].stock+'</small></div><div class="card-body py-2 small" style="text-align: center"><div class="quantity"><button class="plus-btn" type="button" name="button"><img src="plus.svg" alt="" /></button><input type="text" name="name" value="0" id="cantidadProducto'+i+'"> <button class="minus-btn" type="button" name="button"><img src="minus.svg" alt="" /></button></div></div></div></div>';
+		var compraJson = sessionStorage.getItem("Compra");
+		var compra = JSON.parse(compraJson);
+		var total=document.getElementById('valor');
+		
+		total.innerHTML = '<div><b>Sin domicilio su compra tendrá un valor de: $'+compra.precio_productos+'</div>';
+		
+		var selectDomicilio = document.getElementById("domicilio");
+		selectDomicilio.addEventListener('change',
+			function(){
+				var selectedOption = this.options[selectDomicilio.selectedIndex];
+				if(selectedOption.text == "Si"){
+					if(compra.precio_productos*0.05 > 5000){
+						total.innerHTML = '<div><b>Con domicilio su compra tendrá un valor de: $'+(compra.precio_productos*0.05)+'</div>';
+					}else{
+						total.innerHTML = '<div><b>Con domicilio su compra tendrá un valor de: $'+(compra.precio_productos+5000)+'</div>';
+					}
+					
 				}
-				code = code + '</div><script type="text/javascript">$(".minus-btn").on("click", function(e) {e.preventDefault();var $this = $(this);var $input = $this.closest("div").find("input");var value = parseInt($input.val());if (value > 1) {	value = value - 1;} else {	value = 0;}$input.val(value);});$(".plus-btn").on("click", function(e) {e.preventDefault();var $this = $(this);var $input = $this.closest("div").find("input");var value = parseInt($input.val());if (value < 100) {value = value + 1;} else {	value =100;}$input.val(value);});</script>';
-				$("#grid").html(code);
-			},
-			error: function (x, y, z) {
-				alert("Error: "+x.responseText +"  " +x.status);
-			}
-		});
-	} 
+			});
+			
+		var selectModoPago = document.getElementById("modoPago");
+		selectModoPago.addEventListener('change',
+			function(){
+				var selectedOption = this.options[selectModoPago.selectedIndex];
+				if(selectedOption.text == "Cuenta de ahorros"){
+					code = '<div class="card">'
+					+ '<div class="card-header" style="background-color: #BDE0F7;">Ingrese sus datos de pago</div>'
+					+ '<div class="card-body">'
+					+ '<div class="form-group"><label for="numeroTarjeta">Numero tarjeta:</label>'
+					+ '<br><input class="form-control" name="numeroTarjeta" id="numeroTarjeta" type="number" min="0"></input>'
+					+ '</div>'
+					+ '<div class="form-group"><label for="fechaTarjeta">Fecha tarjeta:</label>'
+					+ '<br><input class="form-control" name="fechaTarjeta" id="fechaTarjeta" type="date"></input>'
+					+ '</div>'
+					+ '</div></div><br>';
+					
+					$("#pagoTarjeta").html(code);
+					
+				}else{
+					$("#pagoTarjeta").html("");
+				}
+			});
+	//} 
 });
 
 function comprar(){
-	var cantidad = sessionStorage.getItem("NumeroProductos");
+	
+	/*var cantidad = sessionStorage.getItem("NumeroProductos");
 	var totalVenta = 0;
 	var arr = new Array();
 	var seleccionoProductos=false;
@@ -43,7 +67,7 @@ function comprar(){
 	if(seleccionoProductos){
 		var date = new Date();
 		var fecha= date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-		/*var descuento=0;
+		var descuento=0;
 		if (sessionStorage.getItem("descuento")!="null"){
 			var statusConfirm = confirm("Tienes un bono de 10% de descuento ¿Deseas usarlo?"); 
 			if (statusConfirm == true){ 
@@ -60,20 +84,16 @@ function comprar(){
 			totalVenta=totalVenta+domicilio;
 		}else{ 
 			domicilio=0;
-		}*/	
+		}	
 		var compra = {
 			"Comprador_tipo_identificacion": sessionStorage.getItem("tipoID"),
 			"Comprador_identificacion": sessionStorage.getItem("ID"),
 			"precio_productos": totalVenta,
 			"fecha": fecha,
-			"precio_domicilio": "",
-			"valor_descuento": "",
+			"precio_domicilio": domicilio,
+			"valor_descuento": descuento,
 			"productos": arr
 		}
-		var data = JSON.stringify(compra);
-		sessionStorage.setItem("Compra", data);
-		window.location="efectuarCompra.html";
-		/*
 		var data = JSON.stringify(compra);
 		console.log(data);
 		var xhr = new XMLHttpRequest();
@@ -91,10 +111,10 @@ function comprar(){
 		}
 		xhr.send(data);
 		alert("Gracias por su compra, en unos minutos estaremos en su puerta.");
-		window.location="productosC.html";*/
+		window.location="productosC.html";
 	}else{
 		alert("Para hacer una compra es obvio que debe seleccionar al menos un producto.");
-	}
+	}*/
 }
 
 function logout(){
