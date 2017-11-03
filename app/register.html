@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
+  <title>Registrar una cuenta</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -16,49 +16,71 @@
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
-<body class="bg-dark">
-  <div class="container">
-    <div class="card card-register mx-auto mt-5">
-      <div class="card-header">Register an Account</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputName">First name</label>
-                <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
-              </div>
-              <div class="col-md-6">
-                <label for="exampleInputLastName">Last name</label>
-                <input class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
-          <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputPassword1">Password</label>
-                <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
-              </div>
-              <div class="col-md-6">
-                <label for="exampleConfirmPassword">Confirm password</label>
-                <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
-              </div>
-            </div>
-          </div>
-          <a class="btn btn-primary btn-block" href="login.html">Register</a>
-        </form>
-        <div class="text-center">
-          <a class="d-block small mt-3" href="login.html">Login Page</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<body class="bg-dark" background="fondoInicial.jpg">
+	<div class="container">
+		<div class="card card-register mx-auto mt-5">
+			<div class="card-header" style="background-color: #000; color:white;">Registrar una cuenta</div>
+				<div class="card-body">
+					<form>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-md-6">
+									<label for="exampleInputName">Tipo documento</label>
+									<div class="selectContainer">
+										<select class="form-control" name="tipo_documento" id="tipo_documento">
+											<option value="CC">CC</option>
+											<option value="TI">TI</option>
+											<option value="RC">RC</option>
+											<option value="RE">RE</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label for="exampleInputName">Número</label>
+									<input class="form-control" id="documento" type="number" aria-describedby="numeroDocumentoHelp" placeholder="Ingrese el número de documento">
+								</div>	
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-md-6">
+									<label for="exampleInputName">Nombre</label>
+									<input class="form-control" id="nombres" type="text" aria-describedby="nameHelp" placeholder="Ingrese su nombre">
+								</div>
+								<div class="col-md-6">
+									<label for="exampleInputName">Apellidos</label>
+									<input class="form-control" id="apellidos" type="text" aria-describedby="apellidoHelp" placeholder="Ingrese sus apellidos">
+								</div>	
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="direccion">Direccion</label>
+							<input class="form-control" id="direccion" type="text" aria-describedby="direccionHelp" placeholder="Ingrese su dirección">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">Email</label>
+							<input class="form-control" id="correo" type="email" aria-describedby="emailHelp" placeholder="Ingrese su email">
+						</div>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-md-6">
+									<label for="exampleInputPassword1">Contraseña</label>
+									<input class="form-control" id="password1" type="password" placeholder="Ingrese su contraseña">
+								</div>
+								<div class="col-md-6">
+									<label for="exampleConfirmPassword">Confirmar contraseña</label>
+									<input class="form-control" id="password2" type="password" placeholder="Ingrese su contraseña nuevamente">
+								</div>
+							</div>
+						</div>
+						<a class="btn btn-primary btn-block" href="index.html">Registrar</a>
+					</form>
+					<div class="text-center">
+						<a class="d-block small mt-3" href="index.html">Pagina de inicio de sesión</a>
+					</div>
+				</div>
+			</div>
+		</div>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/popper/popper.min.js"></script>

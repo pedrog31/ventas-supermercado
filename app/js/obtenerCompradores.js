@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var rol = sessionStorage.getItem("Rol");
 	if (nombre == null || rol == null || rol != "vendedor"){
 		alert("Debe loguearse como vendedor para poder acceder a esta página.");
-		window.location="login.html";
+		window.location="index.html";
 	}else{
 		$("#user").html('<i class="fa fa-fw fa-user"></i> Conectado como '+ nombre + ' - Vendedor');
 		$.ajax({
@@ -21,6 +21,7 @@ $(document).ready(function(){
 				+      '<th>Nº documento</th>'
 				+      '<th>Nombre</th>'
 				+      '<th>¿Descuento?</th>'
+				+	   '<th></th>'
 				+    '</tr>'
 				+  '</thead>'
 				+  '<tbody>';
@@ -30,12 +31,14 @@ $(document).ready(function(){
 						+	 '<td align="center">' + data[i].tipo_identificacion + '</td>'
 						+	 '<td align="center">' + data[i].identificacion + '</td>'
 						+    '<td align="center">' + data[i].nombre_completo + '</td>';
-			if (data[i].descuento == true)
+			if (data[i].descuento == true){
 				code = code + '<td align="center"> Si </td>';
-			else
+			}else{
 				code = code + '<td align="center" class="dropdown">'
-							+ '<button id =' + i + ' type="button" onclick="generarCupon( \'' + data[i].tipo_identificacion +'\' ,'+ data[i].identificacion + ');" class="btn btn-default">Agregar cupon</button>'
+							+ '<button id =' + i + ' type="button" onclick="generarCupon( \'' + data[i].tipo_identificacion +'\' ,'+ data[i].identificacion + ');" class="btn btn-success">Agregar cupon</button>'
 							+ '</td>';
+			}
+			code = code + '<td align="center" href="#">'+'<a href="#"><i class="fa fa-times" style="color:red"></i></a>'+'</td>';
 		}
 		code = code + '</tr></tbody> </table> </div>';
 		$("#table").html(code);
@@ -54,7 +57,7 @@ function generarCupon(tipo_identificacion, Identificacion) {
 		xhr.open("PUT", url, true);
 		var comprador = {
 			"tipo_identificacion": tipo_identificacion,
-  		"identificacion": Identificacion
+			"identificacion": Identificacion
 		};
 		var data = JSON.stringify(comprador);
 		xhr.onreadystatechange=function() {

@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="author" content="Pedro Gallego">
-  <title>Ventas supermercados - Compradores</title>
+  <meta name="author" content="">
+  <title>Super Mercado</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -16,6 +16,7 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/buttonstyle.css" media="screen" title="no title" charset="utf-8">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -28,22 +29,15 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-			<a class="nav-link" href="productos.html">
+			<a class="nav-link" href="productosC.html">
 				<i class="fa fa-fw fa-table"></i>
 				<span class="nav-link-text">Lista de productos</span>
 			</a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-			<a class="nav-link" href="reportes.html">
-				<i class="fa fa-fw fa-area-chart"></i>
-				<span class="nav-link-text">Reportes</span>
-			</a>
-        </li>
-
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Compradores">
-			<a class="nav-link" href="compradores.html">
-				<em class="fa fa-fw fa-users"></em>
-				<span class="nav-link-text">Compradores</span>
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+			<a class="nav-link" href="editarDatosUsuario.html">
+				<i class="fa fa-wrench"></i>
+				<span class="nav-link-text">Editar mis datos</span>
 			</a>
 		</li>
       </ul>
@@ -67,55 +61,73 @@
       </ul>
     </div>
   </nav>
-
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="#">Inicio</a>
-        </li>
-        <li class="breadcrumb-item active">Compradores</li>
-      </ol>
-      <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Compradores</div>
-        <div class="card-body">
-
-
-          <div id="table">Consultando compradores...</div>
-
-        </div>
-
-          <!-- Modal -->
-		  <div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog">
-
-			  <!-- Modal content-->
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <h4 class="modal-title">Cupon asignado</h4>
+    <div class="container">
+		<div class="card card-register mx-auto mt-3">
+			<div class="card-header">Editar datos</div>
+				<div class="card-body">
+					<form>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-md-6">
+									<label for="exampleInputName">Tipo documento</label>
+									<div class="selectContainer">
+										<select class="form-control" name="tipo_documento" id="tipo_documento" disabled>
+											<option value="CC">CC</option>
+											<option value="TI">TI</option>
+											<option value="RC">RC</option>
+											<option value="RE">RE</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label for="exampleInputName">Número</label>
+									<input class="form-control" id="documento" type="number" aria-describedby="numeroDocumentoHelp" placeholder="Ingrese el número de documento" disabled>
+								</div>	
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-md-6">
+									<label for="exampleInputName">Nombre</label>
+									<input class="form-control" id="nombres" type="text" aria-describedby="nameHelp" placeholder="Ingrese su nombre">
+								</div>
+								<div class="col-md-6">
+									<label for="exampleInputName">Apellidos</label>
+									<input class="form-control" id="apellidos" type="text" aria-describedby="apellidoHelp" placeholder="Ingrese sus apellidos">
+								</div>	
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="direccion">Direccion</label>
+							<input class="form-control" id="direccion" type="text" aria-describedby="direccionHelp" placeholder="Ingrese su dirección">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">Email</label>
+							<input class="form-control" id="correo" type="email" aria-describedby="emailHelp" placeholder="Ingrese su email" disabled>
+						</div>
+						<div class="form-group">
+							<div class="form-row">
+								<div class="col-md-6">
+									<label for="exampleInputPassword1">Contraseña</label>
+									<input class="form-control" id="password1" type="password" placeholder="Ingrese su contraseña">
+								</div>
+								<div class="col-md-6">
+									<label for="exampleConfirmPassword">Confirmar contraseña</label>
+									<input class="form-control" id="password2" type="password" placeholder="Ingrese su contraseña nuevamente">
+								</div>
+							</div>
+						</div>
+						<a class="btn btn-primary btn-block" href="index.html">Guardar Cambios</a>
+					</form>
 				</div>
-				<div class="modal-body">
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				</div>
-			  </div>
-
 			</div>
-		  </div>
-
-        <div id = "info" class="card-footer small text-muted"></div>
-      </div>
-    </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
+		</div>
+		<br>
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <p><small>Copyright © Ventas supermercado S.A 2017</small></p>
+          <small>Copyright © Ventas supermercado S.A</small>
         </div>
       </div>
     </footer>
@@ -135,12 +147,13 @@
           </div>
           <div class="modal-body">Selecciona "Cerrar sesión" si estás listo para finalizar tu sesión.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-secondary" type="button" data-dismiss="modal" style="color:white;" href="#">Cancelar</a>
             <a class="btn btn-primary" onclick="logout()" href="#">Cerrar sesión</a>
           </div>
         </div>
       </div>
     </div>
+	
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
@@ -154,10 +167,10 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-    <script src="js/obtenerCompradores.js"></script>
+	<script src="js/consumirAllProductosC.js"></script>		
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
   </div>
 </body>
-
+	
 </html>
