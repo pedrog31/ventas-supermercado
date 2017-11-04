@@ -12,7 +12,8 @@ function validar(){
 		alert('Algunos campos no son correctos, vuelva a revisarlos');
 	}else{
 		var xhr = new XMLHttpRequest();
-		var url = "https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/login";
+		//var url = "https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/login";
+		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/login";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
 		console.log($('#inputEmail').val());

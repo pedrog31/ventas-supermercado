@@ -9,9 +9,9 @@ $(document).ready(function(){
 		$.ajax({
 			crossDomain: true,
 			type: 'GET',
-			url: 'https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/productos',
+			url: 'https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productos',
 			contentType: 'application/json; charset=utf-8',
-			datatype: 'jsonp',
+			datatype: 'json',
 			success: function (data) {
 				var code = '<div class="row">';
 				for (i = 0; i < data.length; i++) { 

@@ -42,9 +42,8 @@ function updateProduct() {
 	}else{
 		
 		var xhr = new XMLHttpRequest();
-		var url = "https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/productos";
+		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productos";
 		xhr.open("PUT", url, true);
-		xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
 		var producto = { 
 			"sku": $('#skuProducto').text(),
 			"stock": $('#stockProducto').val()

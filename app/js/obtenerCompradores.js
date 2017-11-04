@@ -7,13 +7,13 @@ $(document).ready(function(){
 	}else{
 		$("#user").html('<i class="fa fa-fw fa-user"></i> Conectado como '+ nombre + ' - Vendedor');
 		$.ajax({
-	crossDomain: true,
-	type: 'GET',
-    url: 'https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/compradores',
-    contentType: 'application/json; charset=utf-8',
-	datatype: 'jsonp',
-    success: function (data) {
-		var code ='<div class="table-responsive">'
+			crossDomain: true,
+			type: 'GET',
+			url: 'https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores',
+			contentType: 'application/json; charset=utf-8',
+			datatype: 'json',
+			success: function (data) {
+				var code ='<div class="table-responsive">'
 				+ '<table id="compradoresTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'
 				+  '<thead>'
 				+    '<tr>'
@@ -26,7 +26,7 @@ $(document).ready(function(){
 				+  '</thead>'
 				+  '<tbody>';
 
-		for (i = 0; i < data.length; i++) {
+			for (i = 0; i < data.length; i++) {
 			code = code + '<tr>'
 						+	 '<td align="center">' + data[i].tipo_identificacion + '</td>'
 						+	 '<td align="center">' + data[i].identificacion + '</td>'
@@ -53,7 +53,7 @@ $(document).ready(function(){
 
 function generarCupon(tipo_identificacion, Identificacion) {
 		var xhr = new XMLHttpRequest();
-		var url = "https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/compradores";
+		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores";
 		xhr.open("PUT", url, true);
 		var comprador = {
 			"tipo_identificacion": tipo_identificacion,

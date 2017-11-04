@@ -16,9 +16,9 @@ function obtenerVentas() {
     $.ajax({
 		crossDomain: true,
 		type: 'GET',
-		url: 'https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/ventas/' + x,
+		url: 'https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/ventas/' + x,
 		contentType: 'application/json; charset=utf-8',
-		datatype: 'jsonp',
+		datatype: 'json',
 		success: function (data) {
 			var code,info;
 			if (data.length == 0) {
@@ -88,9 +88,9 @@ function generarFactura (idCompra) {
 		$.ajax({
 		crossDomain: true,
 		type: 'GET',
-		url: 'https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/productos/' + idCompra,
+		url: 'https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?venta=' + idCompra,
 		contentType: 'application/json; charset=utf-8',
-		datatype: 'jsonp',
+		datatype: 'json',
 		success: function (data) {
 			code = '<center>'
           +          '<img src="http://es.www.oppacart.com/assets/img/icon-carrinho.jpg" name="logo" width="140" height="140" border="0" class="img-circle"></a>'
@@ -130,5 +130,5 @@ function generarFactura (idCompra) {
 function logout(){
 	sessionStorage.removeItem("Nombre");
 	sessionStorage.removeItem("Rol");
-	window.location="login.html";
+	window.location="index.html";
 }
