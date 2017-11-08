@@ -45,11 +45,11 @@
 							<div class="form-row">
 								<div class="col-md-6">
 									<label for="exampleInputName">Nombre</label>
-									<input class="form-control" id="nombres" type="text" aria-describedby="nameHelp" placeholder="Ingrese su nombre">
+									<input class="form-control" id="nombres" type="text" pattern="[a-zA-Z]*" aria-describedby="nameHelp" placeholder="Ingrese su nombre">
 								</div>
 								<div class="col-md-6">
 									<label for="exampleInputName">Apellidos</label>
-									<input class="form-control" id="apellidos" type="text" aria-describedby="apellidoHelp" placeholder="Ingrese sus apellidos">
+									<input class="form-control" id="apellidos" type="text" pattern="[a-zA-Z]*" aria-describedby="apellidoHelp" placeholder="Ingrese sus apellidos">
 								</div>	
 							</div>
 						</div>
@@ -73,7 +73,7 @@
 								</div>
 							</div>
 						</div>
-						<a class="btn btn-primary btn-block" href="index.html">Registrar</a>
+						<a class="btn btn-primary btn-block" href="#" onclick="register()">Registrar</a>
 					</form>
 					<div class="text-center">
 						<a class="d-block small mt-3" href="index.html">Pagina de inicio de sesión</a>
@@ -87,6 +87,7 @@
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/registrarse.js"></script>
 </body>
 
 </html>

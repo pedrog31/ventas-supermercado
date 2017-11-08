@@ -65,10 +65,11 @@ function generarCupon(tipo_identificacion, Identificacion) {
 				console.log(xhr.responseText);
 				var jsonResponse = JSON.parse(xhr.responseText);
 				if (jsonResponse.response == "Ok"){
-					var mymodal = $('#myModal');
+					/*var mymodal = $('#myModal');
 					mymodal.find('.modal-body').text('El cupon a sido asignado exitosamente con el codigo "'
 											 + jsonResponse.codigo + '"');
-											 mymodal.modal('show');
+											 mymodal.modal('show');*/
+					alert('El cupon a sido asignado exitosamente con el codigo "'+ jsonResponse.codigo + '"');
 					window.location= "compradores.html"
 				}
 			}
