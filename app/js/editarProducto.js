@@ -37,7 +37,7 @@ function parse_query_string(query) {
 
 
 function updateProduct() {
-	if($('#stockProducto').val() == "" || !/^([1-9])*$/.test($('#stockProducto').val())){
+	if($('#stockProducto').val() == "" || !/^([0-9])*$/.test($('#stockProducto').val())){
 		alert('Ingrese un nuevo valor válido (solo caracteres numericos)');
 	}else{
 		

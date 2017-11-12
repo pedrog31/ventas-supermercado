@@ -1,31 +1,63 @@
 $(document).ready(function(){ 
 	var nombre = sessionStorage.getItem("Nombre");
 	var rol = sessionStorage.getItem("Rol");
-	/*if (nombre == null || rol == null || rol == "vendedor"){
+	if (nombre == null || rol == null || rol == "vendedor"){
 		alert("Debe loguearse como comprador para poder acceder a esta página.");
 		window.location="index.html";
-	}else{*/
+	}else{
+				
 		$("#user").html('<i class="fa fa-fw fa-user"></i> Conectado como '+ nombre + ' - Comprador');
 		var compraJson = sessionStorage.getItem("Compra");
 		var compra = JSON.parse(compraJson);
 		var total=document.getElementById('valor');
+		var domicilio=document.getElementById('domicilioLabel');
+		var descuento=document.getElementById('descuento');
 		
-		total.innerHTML = '<div><b>Sin domicilio su compra tendrá un valor de: $'+compra.precio_productos+'</div>';
+		total.innerHTML = '<div><b>Su compra tendrá un valor de: $'+compra.precio_productos+'</div>';
 		
+		if(sessionStorage.getItem("descuento") == "true"){
+					code = '<div class="form-group">'
+					+ '<label for="descuento">Tiene <b>descuento</b>, desea usarlo?</label>'
+					+ '<div class="col-xs-5 selectContainer">'
+					+ '<select class="form-control" name="descuento" id="descuento">'
+					+ '<option value="no">No</option>'
+					+ '<option value="yes">Si</option>'
+					+ '</select></div></div>';
+					
+					$("#descuentoDiv").html(code);
+					var selectDescuento= document.getElementById("descuento");
+					selectDescuento.addEventListener('change',
+					function(){
+						var selectedOption = this.options[selectDescuento.selectedIndex];
+						if(selectedOption.text == "Si"){
+							descuento.innerHTML = '<b>- $'+(compra.precio_productos*0.1)+' de descuento';
+						}else{
+							descuento.innerHTML = "";
+						}
+					});	
+					
+		}else{
+			$("#descuentoDiv").html("");
+		}
+				
 		var selectDomicilio = document.getElementById("domicilio");
 		selectDomicilio.addEventListener('change',
 			function(){
 				var selectedOption = this.options[selectDomicilio.selectedIndex];
 				if(selectedOption.text == "Si"){
 					if(compra.precio_productos*0.05 > 5000){
-						total.innerHTML = '<div><b>Con domicilio su compra tendrá un valor de: $'+(compra.precio_productos*0.05)+'</div>';
+						domicilio.innerHTML = '<b>+ $'+(compra.precio_productos*0.05)+' de domicilio';
+						compra.domicilio = compra.precio_productos*0.05;
 					}else{
-						total.innerHTML = '<div><b>Con domicilio su compra tendrá un valor de: $'+(compra.precio_productos+5000)+'</div>';
+						domicilio.innerHTML = '<b>+ $5000 de domicilio';
+						compra.domicilio = 5000;
 					}
-					
+				}else{
+					delete compra.domicilio;
+					domicilio.innerHTML = "";
 				}
-			});
-			
+				sessionStorage.setItem("Compra",JSON.stringify(compra));
+			});	
 		var selectModoPago = document.getElementById("modoPago");
 		selectModoPago.addEventListener('change',
 			function(){
@@ -48,73 +80,117 @@ $(document).ready(function(){
 					$("#pagoTarjeta").html("");
 				}
 			});
-	//} 
+	} 
 });
 
 function comprar(){
+	var compraJson = sessionStorage.getItem("Compra");
+	var data = JSON.parse(compraJson);
+	var selectModoPago = document.getElementById("modoPago");
+	var selectedOption = selectModoPago.options[selectModoPago.selectedIndex];
 	
-	/*var cantidad = sessionStorage.getItem("NumeroProductos");
-	var totalVenta = 0;
-	var arr = new Array();
-	var seleccionoProductos=false;
-	for(i=0; i<cantidad; i++){
-		if($('#cantidadProducto'+i+'').val() > 0){
-			seleccionoProductos=true;
-			totalVenta = totalVenta + (parseInt($('#precioProducto'+i+'').text())*parseInt($('#cantidadProducto'+i+'').val()));
-			arr.push({"sku": $('#skuProducto'+i+'').text(),"cantidad": parseInt($('#cantidadProducto'+i+'').val())});
+	if (sessionStorage.getItem("descuento") == "true"){
+		var selectDescuento = document.getElementById("descuento");
+		var descuento = selectDescuento.options[selectDescuento.selectedIndex];
+		if(descuento.text == "Si"){
+			data.valor_descuento = data.precio_productos*0.1;
+		}else{
+			data.valor_descuento = 0;
 		}
+	}else{
+		data.valor_descuento = 0;
 	}
-	if(seleccionoProductos){
-		var date = new Date();
-		var fecha= date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-		var descuento=0;
-		if (sessionStorage.getItem("descuento")!="null"){
-			var statusConfirm = confirm("Tienes un bono de 10% de descuento ¿Deseas usarlo?"); 
-			if (statusConfirm == true){ 
-				descuento=totalVenta*0.1;
-				totalVenta=totalVenta-descuento;
-			}else{ 
-				descuento=0;
+	if(selectedOption.text == "Cuenta de ahorros"){
+		console.log($('#numeroTarjeta').val());
+		console.log($('#fechaTarjeta').val());
+		if($('#numeroTarjeta').val()!="" && $('#fechaTarjeta').val()!=""){
+			data.numeroCuenta=$('#numeroTarjeta').val();
+			data.fechaVencimiento=$('#fechaTarjeta').val();
+			var xhr = new XMLHttpRequest();
+			var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/ventas";
+			xhr.open("POST", url, true);
+			var data = JSON.stringify(data);
+			console.log(data);
+			//xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
+			xhr.onreadystatechange=function() {
+				if (xhr.readyState==4) {
+					var responseText = xhr.responseText;
+					if (responseText.indexOf("error") !== -1){
+						var res = responseText.split("error");
+						var message = "Error:";
+						for(i=0;i<res.length;i++){
+							message= message + res[i]+" ";
+						}
+						message = message.replace("{", "");
+						message = message.replace("}", "");
+						message = message.replace(/"/g, "");
+						message = message.replace(/\\/g, "");
+						message = message.replace("u00e1", "á");
+						message = message.replace("u00e9", "é");
+						message = message.replace("u00ed", "í");
+						message = message.replace("u00f3", "ó");
+						message = message.replace("u00fa", "ú");
+						message = message.replace("[", "");
+						message = message.replace("]", "");
+						console.log(message);
+						alert(message);
+						if(responseText.indexOf("existente") !== -1){ //Si el error es por stock lo devuelve a la pagina de los productos
+							window.location="productosC.html";
+						}
+					}else{
+						if (data.valor_descuento != 0){ //Uso el descuento
+							sessionStorage.setItem("descuento", "false");
+						}
+						alert("Venta registrada con éxito, gracias por su compra.");
+						window.location="productosC.html";
+					}
+				}
 			}
+			xhr.send(data);
+			
+		}else{
+			alert("Para pagar con tarjeta debe ingresar los datos.");
 		}
-		var domicilio;
-		var confirmDomicilio = confirm("¿Deseas el servicio de domicilio por 2000$ más?"); 
-		if (confirmDomicilio == true){ 
-			domicilio=2000;
-			totalVenta=totalVenta+domicilio;
-		}else{ 
-			domicilio=0;
-		}	
-		var compra = {
-			"Comprador_tipo_identificacion": sessionStorage.getItem("tipoID"),
-			"Comprador_identificacion": sessionStorage.getItem("ID"),
-			"precio_productos": totalVenta,
-			"fecha": fecha,
-			"precio_domicilio": domicilio,
-			"valor_descuento": descuento,
-			"productos": arr
-		}
-		var data = JSON.stringify(compra);
-		console.log(data);
+	}else{
+		console.log(JSON.stringify(data));
 		var xhr = new XMLHttpRequest();
-		var url = "https://j6klah0fic.execute-api.us-east-2.amazonaws.com/SuperMarket/ventas";
+		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/ventas";
 		xhr.open("POST", url, true);
+		var data = JSON.stringify(data);
 		xhr.onreadystatechange=function() {
 			if (xhr.readyState==4) {
-				var jsonResponse = JSON.parse(xhr.responseText);
-				if (jsonResponse.response == "Fail"){
-					alert('Error: '+jsonResponse.message);
+				var responseText = xhr.responseText;
+				if (responseText.indexOf("error") !== -1){
+					var res = responseText.split("error");
+					var message = "Error:";
+					for(i=0;i<res.length;i++){
+						message= message + res[i]+" ";
+					}
+					message = message.replace(/"/g, "");
+					message = message.replace(/\\/g, "");
+					message = message.replace("u00e1", "á");
+					message = message.replace("u00e9", "é");
+					message = message.replace("u00ed", "í");
+					message = message.replace("u00f3", "ó");
+					message = message.replace("u00fa", "ú");
+					message = message.replace("[", "");
+					message = message.replace("]", "");
+					console.log(message);
+					alert(message);
+					if(responseText.indexOf("existente") !== -1){ //Si el error es por stock lo devuelve a la pagina de los productos
+						window.location="productosC.html";
+					}
 				}else{
-					alert(jsonResponse.message);
+					if (data.valor_descuento != 0){ //Uso el descuento
+						sessionStorage.setItem("descuento", "false");
+					}
+					alert("Venta registrada con éxito, gracias por su compra.");
+					window.location="productosC.html";
 				}
 			}
 		}
 		xhr.send(data);
-		alert("Gracias por su compra, en unos minutos estaremos en su puerta.");
-		window.location="productosC.html";
-	}else{
-		alert("Para hacer una compra es obvio que debe seleccionar al menos un producto.");
-	}*/
+	}
 }
 
 function logout(){

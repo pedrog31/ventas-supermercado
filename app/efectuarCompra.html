@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php header('Access-Control-Allow-Origin: *'); ?>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,23 +29,16 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="productos.html">
+          <a class="nav-link" href="productosC.html">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Lista de productos</span>
           </a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="reportes.html">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Reportes</span>
-          </a>
-        </li>
-        
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Compradores"> 
-			<a class="nav-link" href="compradores.html"> 
-				<em class="fa fa-fw fa-table"></em> 
-				<span class="nav-link-text">Compradores</span> 
-			</a> 
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+			<a class="nav-link" href="editarDatosUsuario.html">
+				<i class="fa fa-wrench"></i>
+				<span class="nav-link-text">Editar mis datos</span>
+			</a>
 		</li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -75,8 +68,9 @@
       <div class="card-header">Efectuar compra</div>
       <div class="card-body">
         <form>
+			<div id="descuentoDiv"></div>
 			<div class="form-group">
-				<label for="domicilio">Desea nuestro servicio de domicilio?</label>
+				<label for="domicilio">Desea nuestro servicio de <b>domicilio</b>?</label>
 				<div class="col-xs-5 selectContainer">
 					<select class="form-control" name="domicilio" id="domicilio">
 						<option value="no">No</option>
@@ -84,7 +78,9 @@
 					</select>
 				</div>
 			</div>
-			<label id="valor">Su compra tendrá un valor de: </label><br></br>
+			<label id="valor">Su compra tendrá un valor de: </label>
+			<label id="domicilioLabel"></label>
+			<label id="descuento"></label>
 			<div class="form-group">
 				<label for="modoPago">Seleccione método de pago</label>
 				<div class="col-xs-5 selectContainer">
@@ -145,12 +141,6 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.132.0.min.js"></script>
-	
-    <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/sb-admin-charts.min.js"></script>
-	
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.132.0.min.js"></script>
     <script src="js/comprar.js"></script>
   </div>
 </body>

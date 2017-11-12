@@ -42,7 +42,7 @@ function comprar(){
 	}
 	if(seleccionoProductos){
 		var date = new Date();
-		var fecha= date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+		var fecha= date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 		/*var descuento=0;
 		if (sessionStorage.getItem("descuento")!="null"){
 			var statusConfirm = confirm("Tienes un bono de 10% de descuento ¿Deseas usarlo?"); 
@@ -66,8 +66,7 @@ function comprar(){
 			"Comprador_identificacion": sessionStorage.getItem("ID"),
 			"precio_productos": totalVenta,
 			"fecha": fecha,
-			"precio_domicilio": "",
-			"valor_descuento": "",
+			"valor_descuento": 0,
 			"productos": arr
 		}
 		var data = JSON.stringify(compra);
