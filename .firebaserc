@@ -1,7 +1,5 @@
 {
   "projects": {
-    " ": "ventas-supermercado",
-    "default": "supermercado-trabajo1",
-    "supermercado2": "supermercado-61e5a"
+    "default": "ventas-supermercado-v2"
   }
 }
