@@ -27,17 +27,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Productos">
-          <a class="nav-link" href="productos.html">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Lista de productos</span>
-          </a>
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+			<a class="nav-link" href="productos.html">
+				<i class="fa fa-fw fa-table"></i>
+				<span class="nav-link-text">Lista de productos</span>
+			</a>
         </li>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reportes">
-          <a class="nav-link" href="reportes.html">
-            <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Reportes</span>
-          </a>
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+			<a class="nav-link" href="reportes.html">
+				<i class="fa fa-fw fa-area-chart"></i>
+				<span class="nav-link-text">Reportes</span>
+			</a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Compradores">
@@ -46,9 +46,10 @@
 				<span class="nav-link-text">Compradores</span>
 			</a>
 		</li>
+		
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Domicilios">
 			<a class="nav-link" href="domicilios.html">
-				<em class="fa fa-fw fa-shopping-cart"></em>
+				<em class="fa fa-fw fa-users"></em>
 				<span class="nav-link-text">Domicilios</span>
 			</a>
 		</li>
@@ -81,35 +82,41 @@
         <li class="breadcrumb-item">
           <a href="#">Inicio</a>
         </li>
-        <li class="breadcrumb-item active">Reporte de ventas</li>
+        <li class="breadcrumb-item active">Compradores</li>
+		<li class="breadcrumb-item active">Domicilios</li>
       </ol>
       <!-- Example DataTables Card-->
       <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-fw fa-area-chart"></i> Ventas del mes
-          	<select id="mySelect" onchange="obtenerVentas()">
-			  <option value="0">--Seleccione--
-			  <option value="1">Enero
-			  <option value="2">Febrero
-			  <option value="3">Marzo
-			  <option value="4">Abril
-			  <option value="5">Mayo
-			  <option value="6">Junio
-			  <option value="7">Julio
-			  <option value="8">Agosto
-			  <option value="9">Septiembre
-			  <option value="10">Octubre
-			  <option value="11">Noviembre
-			  <option value="12">Diciembre
-			</select>
-		</div>
-
+        <div class="card-header" id="tituloTabla">
+		
+           </div>
         <div class="card-body">
 
-                <div id ="table" align = "center">Seleccione el mes del reporte.</div>
+
+          <div id="table">Consultando Domicilios...</div>
 
         </div>
-        <div id = "info" class = "card-footer small text-muted" style="color:black; font-size: 150%;"></div>
+
+          <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h4 class="modal-title">Cupon asignado</h4>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			  </div>
+
+			</div>
+		  </div>
+
+        <div id = "info" class="card-footer small text-muted"></div>
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -125,12 +132,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
     </a>
-
-<!-- factura Modal-->
-<div class="card-body">
-  <div id ="factura" align = "center"></div>
-</div>
-
     <!-- Logout Modal-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -162,9 +163,8 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-    <script src="js/obtenerReportes.js"></script>
+    <script src="js/obtenerDomiciliosC_Admn.js"></script>
     <script src="js/sb-admin-datatables.min.js"></script>
-
   </div>
 </body>
 

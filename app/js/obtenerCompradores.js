@@ -21,6 +21,7 @@ $(document).ready(function(){
 				+      '<th>Nº documento</th>'
 				+      '<th>Nombre</th>'
 				+      '<th>¿Descuento?</th>'
+				+      '<th>Domicilios</th>'
 				+	   '<th></th>'
 				+    '</tr>'
 				+  '</thead>'
@@ -38,6 +39,9 @@ $(document).ready(function(){
 							+ '<button id =' + i + ' type="button" onclick="generarCupon( \'' + data[i].tipo_identificacion +'\' ,'+ data[i].identificacion + ');" class="btn btn-success">Agregar cupon</button>'
 							+ '</td>';
 			}
+			code = code + '<td align="center" class="dropdown">'
+							+ '<button id =' + i + ' type="button" onclick="verDomicilios( \'' + data[i].tipo_identificacion +'\' ,'+ data[i].identificacion + ');" class="btn btn-success">Ver</button>'
+							+ '</td>';
 			code = code + '<td align="center" href="#">'+'<a href="#"><i class="fa fa-times" style="color:red"></i></a>'+'</td>';
 		}
 		code = code + '</tr></tbody> </table> </div>';
@@ -50,6 +54,12 @@ $(document).ready(function(){
 	}
 });
 
+function verDomicilios(tipo_identificacion, Identificacion) {
+	sessionStorage.setItem("tipo_identificacion_detalle_domicilio", tipo_identificacion);
+	sessionStorage.setItem("identificacion_detalle_domicilio", Identificacion);
+	window.location="domiciliosC_Admn.html";
+}
+	
 
 function generarCupon(tipo_identificacion, Identificacion) {
 		var xhr = new XMLHttpRequest();

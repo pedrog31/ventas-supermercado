@@ -92,7 +92,7 @@ function comprar(){
 		alert("Gracias por su compra, en unos minutos estaremos en su puerta.");
 		window.location="productosC.html";*/
 	}else{
-		alert("Para hacer una compra es obvio que debe seleccionar al menos un producto.");
+		alert("Para hacer una compra debe seleccionar al menos un producto.");
 	}
 }
 
