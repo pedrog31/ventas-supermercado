@@ -41,14 +41,16 @@ $(document).ready(function(){
 					for (i = 0; i < jsonResponse.length; i++) {
 						if(jsonResponse[i].tipo==1){
 							tipo="Ingreso";
+							valor='<td align="center" style="color:green">' + jsonResponse[i].valor + '</td>';
 						}else{
 							tipo="Egreso";
+							valor='<td align="center" style="color:red">' + jsonResponse[i].valor + '</td>';
 						}
 						
 						code = code + '<tr>'
 						+	 '<td align="center">' + jsonResponse[i].id + '</td>'
 						+	 '<td align="center">' + tipo + '</td>'
-						+    '<td align="center">' + jsonResponse[i].valor + '</td>'
+						+    valor
 						+    '<td align="center">' + jsonResponse[i].numeroCuenta + '</td>'
 						+    '<td align="center">' + jsonResponse[i].fecha + '</td>';
 					}
