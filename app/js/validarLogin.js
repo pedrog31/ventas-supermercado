@@ -27,7 +27,7 @@ function validar(){
 		//alert('Json data: ' +data);
 		xhr.onreadystatechange=function() {
 			if (xhr.readyState==4) {
-				console.log('Respuesta '+xhr.responseText);
+				//console.log('Respuesta '+xhr.responseText);
 				var jsonResponse = JSON.parse(xhr.responseText);
 				if (jsonResponse.response == "Fail"){
 					alert('El usuario no existe o la contraseña es incorrecta.');
@@ -37,6 +37,9 @@ function validar(){
 					sessionStorage.setItem("tipoID", jsonResponse.tipoIdentificacion);
 					sessionStorage.setItem("ID", jsonResponse.identificacion);
 					sessionStorage.setItem("descuento", jsonResponse.descuento);
+					sessionStorage.setItem("email", $('#inputEmail').val());
+					sessionStorage.setItem("pass", $('#inputPassword').val());
+					sessionStorage.setItem("direccion", jsonResponse.direccion);
 					if (jsonResponse.response == "vendedor"){
 						window.location="productos.html";
 					}else{

@@ -42,7 +42,8 @@ $(document).ready(function(){
 			code = code + '<td align="center" class="dropdown">'
 							+ '<button id =' + i + ' type="button" onclick="verDomicilios( \'' + data[i].tipo_identificacion +'\' ,'+ data[i].identificacion + ');" class="btn btn-success">Ver</button>'
 							+ '</td>';
-			code = code + '<td align="center" href="#">'+'<a href="#"><i class="fa fa-times" style="color:red"></i></a>'+'</td>';
+			//code = code + '<td align="center" href="#">'+'<a href="#" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times" style="color:red"></i></a>'+'</td>';
+			code = code + '<td align="center" href="#">'+'<button href="#" style="border: none; background: none;" onclick="borrar(\''+ data[i].tipo_identificacion +'\' ,'+ data[i].identificacion +');"><i class="fa fa-times" style="color:red"></i></button>'+'</td>';
 		}
 		code = code + '</tr></tbody> </table> </div>';
 		$("#table").html(code);
@@ -64,12 +65,13 @@ function verDomicilios(tipo_identificacion, Identificacion) {
 function generarCupon(tipo_identificacion, Identificacion) {
 		var xhr = new XMLHttpRequest();
 		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores";
-		xhr.open("PUT", url, true);
+		xhr.open("POST", url, true);
 		var comprador = {
 			"tipo_identificacion": tipo_identificacion,
 			"identificacion": Identificacion
 		};
 		var data = JSON.stringify(comprador);
+		console.log(data);
 		xhr.onreadystatechange=function() {
 			if (xhr.readyState == 4) {
 				console.log(xhr.responseText);
@@ -86,6 +88,37 @@ function generarCupon(tipo_identificacion, Identificacion) {
 		}
 		xhr.send(data);
 
+}
+
+
+function borrar (tipo_identificacion, identificacion){
+	var statusConfirm = confirm("¿Seguro quieres eliminar este usuario?"); 
+	if (statusConfirm == true){ 
+		var xhr = new XMLHttpRequest();
+		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/usuarios";
+		xhr.open("DELETE", url, true);
+		//xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
+		var eliminar_usuario = { 
+			"tipo_documento": tipo_identificacion,
+			"documento": identificacion.toString()
+		}; 
+		var data = JSON.stringify(eliminar_usuario);
+		console.log(data);
+		//alert('Json data: ' +data);
+		xhr.onreadystatechange=function() {
+			if (xhr.readyState==4) {
+				console.log(xhr.responseText);
+				var jsonResponse = JSON.parse(xhr.responseText);
+				if (jsonResponse.response == "Fail"){
+					alert('Error: '+jsonResponse.message);
+				}else{
+					alert('El usuario ha sido eliminado satisfactoriamente.');
+					window.location="compradores.html";
+				}
+			}
+		}
+		xhr.send(data);
+	}
 }
 
 function logout(){

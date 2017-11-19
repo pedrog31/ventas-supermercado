@@ -46,6 +46,12 @@
 				<span class="nav-link-text">Compradores</span>
 			</a>
 		</li>
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Domicilios">
+			<a class="nav-link" href="domicilios.html">
+				<em class="fa fa-fw fa-shopping-cart"></em>
+				<span class="nav-link-text">Domicilios</span>
+			</a>
+		</li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -123,7 +129,24 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
     </a>
-    <!-- Logout Modal-->
+    <!-- Delete Modal-->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¿Seguro quieres eliminar este usuario?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" onclick="delete()" href="#">Aceptar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -151,11 +174,8 @@
     <script src="vendor/chart.js/Chart.min.js"></script>
     <script src="vendor/datatables/jquery.dataTables.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/obtenerCompradores.js"></script>
-    <script src="js/sb-admin-datatables.min.js"></script>
   </div>
 </body>
 

@@ -77,32 +77,17 @@
 							<div class="form-row">
 								<div class="col-md-6">
 									<label for="exampleInputName">Tipo documento</label>
-									<div class="selectContainer">
-										<select class="form-control" name="tipo_documento" id="tipo_documento" disabled>
-											<option value="CC">CC</option>
-											<option value="TI">TI</option>
-											<option value="RC">RC</option>
-											<option value="RE">RE</option>
-										</select>
-									</div>
+									<input class="form-control" id="tipo_documento" type="text" disabled>
 								</div>
 								<div class="col-md-6">
 									<label for="exampleInputName">Número</label>
-									<input class="form-control" id="documento" type="number" aria-describedby="numeroDocumentoHelp" placeholder="Ingrese el número de documento" disabled>
+									<input class="form-control" id="documento" type="number" disabled>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="form-row">
-								<div class="col-md-6">
-									<label for="exampleInputName">Nombre</label>
-									<input class="form-control" id="nombres" type="text" aria-describedby="nameHelp" placeholder="Ingrese su nombre">
-								</div>
-								<div class="col-md-6">
-									<label for="exampleInputName">Apellidos</label>
-									<input class="form-control" id="apellidos" type="text" aria-describedby="apellidoHelp" placeholder="Ingrese sus apellidos">
-								</div>
-							</div>
+							<label for="exampleInputName">Nombres</label>
+							<input class="form-control" id="nombres" type="text" aria-describedby="nameHelp" placeholder="Ingrese su nombre">
 						</div>
 						<div class="form-group">
 							<label for="direccion">Direccion</label>
@@ -124,7 +109,7 @@
 								</div>
 							</div>
 						</div>
-						<a class="btn btn-primary btn-block" href="index.html">Guardar Cambios</a>
+						<a class="btn btn-primary btn-block" onclick="updateData()" href="#">Guardar Cambios</a>
 					</form>
 				</div>
 			</div>
@@ -173,9 +158,7 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-	<script src="js/consumirAllProductosC.js"></script>
-    <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/sb-admin-charts.min.js"></script>
+	<script src="js/editarDatosUsuario.js"></script>
   </div>
 </body>
 

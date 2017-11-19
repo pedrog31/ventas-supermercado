@@ -1,12 +1,12 @@
 function register() {
-	if($('#documento').val() == "" || $('#nombres').val() == "" || $('#apellidos').val() == "" || $('#direccion').val() == "" || $('#correo').val() == "" || $('#password1').val() == "" || $('#password2').val() == ""){
+	if($('#documento').val() == "" || $('#nombres').val() == "" || $('#direccion').val() == "" || $('#correo').val() == "" || $('#password1').val() == "" || $('#password2').val() == ""){
 		alert('No puede dejar ningún campo vacio.');
 	}else{
 		if(!/^([0-9])*$/.test($('#documento').val())){
 			alert('El campo -Número documento- solo admite valores numericos.');
 		}else{
-			if (/^([0-9])*$/.test($('#nombres').val()) | /^([0-9])*$/.test($('#apellidos').val())){
-				alert('Los campos -Nombre, Apellidos- no admite valores numericos.');
+			if (/^([0-9])*$/.test($('#nombres').val())){
+				alert('El campo -Nombres- no admite valores numericos.');
 			}else{
 				if($('#documento').val() == "0"){
 					alert('Número de documento no puede ser igual a 0.');
@@ -30,10 +30,11 @@ function register() {
 									"correo": $('#correo').val(),
 									"contraseña": $('#password1').val(),
 									"nombres": $('#nombres').val(),
-									"apellidos": $('#apellidos').val(),
 									"direccion": $('#direccion').val()
 								}; 
+								
 								var data = JSON.stringify(producto);
+								console.log(data);
 								//alert('Json data: ' +data);
 								xhr.onreadystatechange=function() {
 									if (xhr.readyState==4) {
