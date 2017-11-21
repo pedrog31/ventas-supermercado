@@ -21,19 +21,18 @@ $(document).ready(function(){
 			"processData": false,
 			"data": "{\r\n    \"tipo_identificacion\": \"CC\",\r\n    \"identificacion\": \"10293456\"\r\n  }"
 		}
-		$.ajax(settings).done(function (response) {
+		$.ajax(settings).done(function (data) {
 			var code ='<div class="table-responsive">'
 			+ '<table id="domiciliosTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'
 			+  '<thead>'
 			+    '<tr>'
 			+      '<th>Numero compra</th>'
 			+      '<th>Fecha</th>'
-			+      '<th>valor_descuento</th>'
-			+      '<th>precio_domicilio</th>'
-			+      '<th>Precio total</th>'
+			+      '<th>Descuento</th>'
+			+      '<th>Valor domicilio</th>'
+			+      '<th>Total</th>'
 			+      '<th>Estado</th>'
-			+      '<th>Justificacion</th>'
-			+	   '<th></th>'
+			+      '<th>Accion</th>'
 			+    '</tr>'
 			+  '</thead>'
 			+  '<tbody>';
@@ -45,10 +44,9 @@ $(document).ready(function(){
 							+  '<td align="center">' + data[i].valor_descuento + '</td>'
 							+	 '<td align="center">' + data[i].precio_domicilio + '</td>'
 							+	 '<td align="center">' + data[i].precio_productos + '</td>'
-							+	 '<td align="center">' + data[i].estado + '</td>'
-							+  '<td align="center">' + data[i].justificacion + '</td>';
+							+	 '<td align="center">' + data[i].estado + '</td>';
 				if (data[i].justificacion != null){
-					code = code + '<td align="center">' +  data[i].justificacion + '</td>';
+					code = code + '<td align="center"> El pedido fue rechazado: \"' +  data[i].justificacion + '\"</td>';
 				}else
 					if (data[i].estado == "Recibido") {
 						code += '<td align="center">   -   </td>'
