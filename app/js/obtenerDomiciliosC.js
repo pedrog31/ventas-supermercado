@@ -13,11 +13,11 @@ $(document).ready(function(){
 			"crossDomain": true,
 			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
 			"method": "POST",
-			"headers": {
+			/*"headers": {
 				"content-type": "application/json; charset=utf-8",
 				"cache-control": "no-cache",
 				"postman-token": "be625375-873c-3662-ad2e-e910a88e3d8e"
-			},
+			},*/
 			"processData": false,
 			"data": "{\r\n    \"tipo_identificacion\": \"" + tipo_identificacion + "\",\r\n    \"identificacion\": \"" + identificacion + "\"\r\n  }"
 		}
@@ -72,19 +72,19 @@ $(document).ready(function(){
 
 function confirmarRecibido(idDomicilio) {
 	$("#myModal").modal();
-		/**
-			var modalCode = "Estos son los productos de tu pedido<br>";
-		  var settingsProductos = {
+		
+		var modalCode = "Estos son los productos de tu pedido<br>";
+		var settingsProductos = {
 			"async": true,
 			"crossDomain": true,
 			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?domicilio=" + idDomicilio,
 			"method": "GET",
-			"headers": {
+			/*"headers": {
 				"Access-Control-Allow-Headers": "Origin",
 				"cache-control": "no-cache",
 				"content-type": "application/json; charset=utf-8",
 				"postman-token": "80bf795e-976a-86d2-75fc-212b4387f216"
-			}
+			}*/
 		}
 
 		$.ajax(settingsProductos).done(function (productos) {
@@ -100,7 +100,8 @@ function confirmarRecibido(idDomicilio) {
 			+    '</tr>'
 			+  '</thead>'
 			+  '<tbody>';
-
+			
+			console.log(productos);
 			for (i = 0; i < productos.length; i++) {
 				var precio = productos[i].precio * productos[i].cantidad
 				modalCode += '<tr>'
@@ -112,12 +113,13 @@ function confirmarRecibido(idDomicilio) {
 
 			modalCode += '</tr></tbody> </table> </div>';
 			});
-**/
+
 			var modalButtonsCode =  '<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar :|</button>'
 													 +	'<button type="button" class="btn btn-default" onclick="rechazarDomicilio(' + idDomicilio + ');" class="btn btn-success">Rechazar domicilio :(</button>'
 													 +	'<button type="button" class="btn btn-default" onclick="aceptarDomicilio(' + idDomicilio + ');" class="btn btn-success">Aceptar domicilio :)</button>';
 			$("#modalButtonBody").html(modalButtonsCode);
-			//$("#modalBody").html(modalCode);
+			console.log(modalCode);
+			$("#modalBody").html(modalCode);
 }
 
 function rechazarDomicilio(idDomicilio) {
@@ -134,11 +136,11 @@ function aceptarDomicilio(idDomicilio) {
   "crossDomain": true,
   "url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
   "method": "PUT",
-  "headers": {
+  /*"headers": {
     "content-type": "application/json",
     "cache-control": "no-cache",
     "postman-token": "54c2f14b-deaa-1f9e-b0ce-9e395b4392da"
-  },
+  },*/
   "processData": false,
   "data": "{\n    \"idDomicilio\": " + idDomicilio + "\n  }\n"
 }
@@ -150,31 +152,60 @@ $.ajax(settings).done(function (response) {
 
 		var modalButtonsCode = '<button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>';
 		$("#modalButtonBody").html(modalButtonsCode);
+		window.location="domiciliosC.html";
 	}
 });
 }
 
 function confirmarRechazo(idDomicilio) {
 	var justificacion = document.getElementById('justificacionTextArea').value;
-	var rechazoSettings = {
+	/*var rechazoSettings = {
 		"async": true,
 		"crossDomain": true,
-		"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/rechazo",
-		"method": "POST",
+		"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
+		"method": "DELETE",
 		"headers": {
-			"content-type": "application/json; charset=utf-8",
-			"cache-control": "no-cache",
-			"postman-token": "be625375-873c-3662-ad2e-e910a88e3d8e"
+			"Access-Control-Allow-Origin": "true"
 		},
 		"processData": false,
 		"data": "{\r\n    \"idDomicilio\": \"" + idDomicilio + "\",\r\n    \"justificacion\": \"" + justificacion + "\",\r\n   \"fecha\": \"" + new Date() + "\",\r\n  }"
-	}
+		
+		
+	}*/
+	
+	var xhr = new XMLHttpRequest();
+		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios";
+		xhr.open("DELETE", url, true);
+		//xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
+		var rechazo = { 
+			"idDomicilio": idDomicilio,
+			"justificacion": justificacion,
+			"fecha": new Date()
+		}; 
+		var data = JSON.stringify(rechazo);
+		console.log(data);
+		//alert('Json data: ' +data);
+		xhr.onreadystatechange=function() {
+			if (xhr.readyState==4) {
+				console.log(xhr.responseText);
+				var jsonResponse = JSON.parse(xhr.responseText);
+				if (jsonResponse.response == "Fail"){
+					alert('Error: '+jsonResponse.message);
+				}else{
+					alert(jsonResponse.message);
+					var codeRechazo = jsonResponse.message;
+					$("#modalBody").html(codeRechazo);
+					window.location="domiciliosC.html";
+				}
+			}
+		}
+		xhr.send(data);
 
-
+/*
 	$.ajax(rechazoSettings).done(function (dataRechazo) {
 		var codeRechazo = dataRechazo.message
 		$("#modalBody").html(codeRechazo);
-	});
+	});*/
 }
 
 function logout(){
