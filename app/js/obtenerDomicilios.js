@@ -32,7 +32,7 @@ $(document).ready(function(){
 			+      '<th>Precio domicilio</th>'
 			+      '<th>Precio total</th>'
 			+      '<th>Estado</th>'
-			+      '<th>Justificacion</th>'			
+			+      '<th>Justificacion</th>'
 			+    '</tr>'
 			+  '</thead>'
 			+  '<tbody>';
@@ -45,7 +45,7 @@ $(document).ready(function(){
 							+  '<td align="center">' + data[i].valor_descuento + '</td>'
 							+	 '<td align="center">' + data[i].precio_domicilio + '</td>'
 							+	 '<td align="center">' + data[i].precio_productos + '</td>'
-							+	 '<td align="center">' + data[i].estado + '</td>'							
+							+	 '<td align="center">' + data[i].estado + '</td>'
 				if (data[i].justificacion == null){
 					code = code + '<td align="center"> - </td>';
 				}else

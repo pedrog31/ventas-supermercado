@@ -28,6 +28,7 @@ $(document).ready(function(){
 			+    '<tr>'
 			+      '<th>Numero compra</th>'
 			+      '<th>Fecha</th>'
+			+      '<th>Valor base</th>'
 			+      '<th>Descuento</th>'
 			+      '<th>Valor domicilio</th>'
 			+      '<th>Total</th>'
@@ -38,11 +39,13 @@ $(document).ready(function(){
 			+  '<tbody>';
 
 			for (i = 0; i < data.length; i++) {
+				var base = data[i].precio_productos + data[i].valor_descuento - data[i].precio_domicilio;
 				code += '<tr>'
 							+	 '<td align="center">' + data[i].idDomicilio + '</td>'
 							+	 '<td align="center">' + data[i].fecha + '</td>'
-							+  '<td align="center">' + data[i].valor_descuento + '</td>'
-							+	 '<td align="center">' + data[i].precio_domicilio + '</td>'
+							+	 '<td align="center">' + base + '</td>'
+							+  '<td align="center">-' + data[i].valor_descuento + '</td>'
+							+	 '<td align="center">+' + data[i].precio_domicilio + '</td>'
 							+	 '<td align="center">' + data[i].precio_productos + '</td>'
 							+	 '<td align="center">' + data[i].estado + '</td>';
 				if (data[i].justificacion != null){
@@ -52,7 +55,7 @@ $(document).ready(function(){
 						code += '<td align="center">   -   </td>'
 					}else {
 						code += '<td align="center" class="dropdown">'
-							+ '<button id =' + i + ' type="button" onclick="confirmarRecibido();" class="btn btn-success">Confirmar recibido</button>'
+							+ '<button id =' + i + ' type="button" onclick="confirmarRecibido(' + data[i].idDomicilio + ');" class="btn btn-success">Confirmar recibido</button>'
 							+ '</td>';
 						}
 			}
@@ -62,6 +65,110 @@ $(document).ready(function(){
 		});
 	}
 });
+
+function confirmarRecibido(idDomicilio) {
+	$("#myModal").modal();
+		/**
+			var modalCode = "Estos son los productos de tu pedido<br>";
+		  var settingsProductos = {
+			"async": true,
+			"crossDomain": true,
+			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?domicilio=" + idDomicilio,
+			"method": "GET",
+			"headers": {
+				"Access-Control-Allow-Headers": "Origin",
+				"cache-control": "no-cache",
+				"content-type": "application/json; charset=utf-8",
+				"postman-token": "80bf795e-976a-86d2-75fc-212b4387f216"
+			}
+		}
+
+		$.ajax(settingsProductos).done(function (productos) {
+
+			modalCode = '<div class="table-responsive">'
+			+ '<table id="domiciliosTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'
+			+  '<thead>'
+			+    '<tr>'
+			+      '<th>Nombre</th>'
+			+      '<th>Valor unidad</th>'
+			+      '<th>Cantidad</th>'
+			+      '<th>Precio</th>'
+			+    '</tr>'
+			+  '</thead>'
+			+  '<tbody>';
+
+			for (i = 0; i < productos.length; i++) {
+				var precio = productos[i].precio * productos[i].cantidad
+				modalCode += '<tr>'
+							+	 '<td align="center">' + productos[i].nombre + '</td>'
+							+	 '<td align="center">' + productos[i].precio + '</td>'
+							+	 '<td align="center">' + productos[i].cantidad + '</td>'
+							+  '<td align="center">-' + precio + '</td>';
+			}
+
+			modalCode += '</tr></tbody> </table> </div>';
+			});
+**/
+			var modalButtonsCode =  '<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar :|</button>'
+													 +	'<button type="button" class="btn btn-default" onclick="rechazarDomicilio(' + idDomicilio + ');" class="btn btn-success">Rechazar domicilio :(</button>'
+													 +	'<button type="button" class="btn btn-default" onclick="aceptarDomicilio(' + idDomicilio + ');" class="btn btn-success">Aceptar domicilio :)</button>';
+			$("#modalButtonBody").html(modalButtonsCode);
+			//$("#modalBody").html(modalCode);
+}
+
+function rechazarDomicilio(idDomicilio) {
+	var justificacionCode = 'Lamentamos escuchar esto, por favor cuentanos por que no deseas recibir la compra. <br><br>'
+												+ '<textarea id="justificacionTextArea" rows="4" cols="50"> </textarea>';
+	var modalButtonsCode = '<button type="button" class="btn btn-default" onclick="confirmarRechazo(' + idDomicilio + ');" class="btn btn-success" data-dismiss="modal">Aceptar</button>';
+	$("#modalButtonBody").html(modalButtonsCode);
+	$("#modalBody").html(justificacionCode);
+}
+
+function aceptarDomicilio(idDomicilio) {
+	var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
+  "method": "PUT",
+  "headers": {
+    "content-type": "application/json",
+    "cache-control": "no-cache",
+    "postman-token": "54c2f14b-deaa-1f9e-b0ce-9e395b4392da"
+  },
+  "processData": false,
+  "data": "{\n    \"idDomicilio\": " + idDomicilio + "\n  }\n"
+}
+
+$.ajax(settings).done(function (response) {
+  if (response.message.equals("Ok")) {
+		var mensaje = 'Gracias por preferirnos, exitos';
+		$("#modalBody").html(mensaje);
+	}
+});
+}
+
+function confirmarRechazo(idDomicilio) {
+	var justificacion = document.getElementById('justificacionTextArea').value;
+	var rechazoSettings = {
+		"async": true,
+		"crossDomain": true,
+		"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/rechazo",
+		"method": "POST",
+		"headers": {
+			"content-type": "application/json; charset=utf-8",
+			"cache-control": "no-cache",
+			"postman-token": "be625375-873c-3662-ad2e-e910a88e3d8e"
+		},
+		"processData": false,
+		"data": "{\r\n    \"idDomicilio\": \"" + idDomicilio + "\",\r\n    \"justificacion\": \"" + justificacion + "\",\r\n   \"fecha\": \"" + new Date() + "\",\r\n  }"
+	}
+
+
+	$.ajax(rechazoSettings).done(function (dataRechazo) {
+		var codeRechazo = dataRechazo.message
+		$("#modalBody").html(codeRechazo);
+	});
+}
 
 function logout(){
 	sessionStorage.removeItem("Nombre");
