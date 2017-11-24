@@ -19,7 +19,7 @@ $(document).ready(function(){
 				"postman-token": "be625375-873c-3662-ad2e-e910a88e3d8e"
 			},
 			"processData": false,
-			"data": "{\r\n    \"tipo_identificacion\": \"CC\",\r\n    \"identificacion\": \"10293456\"\r\n  }"
+			"data": "{\r\n    \"tipo_identificacion\": \"" + tipo_identificacion + "\",\r\n    \"identificacion\": \"" + identificacion + "\"\r\n  }"
 		}
 		$.ajax(settings).done(function (data) {
 			var code ='<div class="table-responsive">'
@@ -37,6 +37,7 @@ $(document).ready(function(){
 			+    '</tr>'
 			+  '</thead>'
 			+  '<tbody>';
+
 
 			for (i = 0; i < data.length; i++) {
 				var base = data[i].precio_productos + data[i].valor_descuento - data[i].precio_domicilio;
@@ -61,6 +62,9 @@ $(document).ready(function(){
 			}
 
 			code += '</tr></tbody> </table> </div>';
+			if (data.length == 0) {
+				code = 'Parece que no tienes domicilios en este momento :(, ¿Que esperas para comprar?';
+			}
 			$("#table").html(code);
 		});
 	}
@@ -140,9 +144,12 @@ function aceptarDomicilio(idDomicilio) {
 }
 
 $.ajax(settings).done(function (response) {
-  if (response.message.equals("Ok")) {
+  if (response.message == 'Ok') {
 		var mensaje = 'Gracias por preferirnos, exitos';
 		$("#modalBody").html(mensaje);
+
+		var modalButtonsCode = '<button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>';
+		$("#modalButtonBody").html(modalButtonsCode);
 	}
 });
 }
