@@ -16,7 +16,7 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-  
+
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -34,6 +34,15 @@
             <span class="nav-link-text">Lista de productos</span>
           </a>
         </li>
+
+      </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+        <a class="nav-link" href="domiciliosC.html">
+          <i class="fa fa-fw fa-table"></i>
+          <span class="nav-link-text">Domicilios</span>
+        </a>
+      </li>
+      
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
 			<a class="nav-link" href="editarDatosUsuario.html">
 				<i class="fa fa-wrench"></i>
@@ -63,7 +72,7 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-      
+
 	  <div class="card card-register mx-auto mt-2">
       <div class="card-header">Efectuar compra</div>
       <div class="card-body">
@@ -91,12 +100,12 @@
 				</div>
 			</div>
 			<div id="pagoTarjeta"></div>
-          
+
           <a class="btn btn-success btn-block" onclick="comprar()" href="#"><i class="fa fa-money"></i> Comprar</a>
         </form>
       </div>
     </div>
-      
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">

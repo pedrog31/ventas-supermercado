@@ -13,16 +13,11 @@ $(document).ready(function(){
 			"crossDomain": true,
 			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
 			"method": "POST",
-			/*"headers": {
-				"content-type": "application/json; charset=utf-8",
-				"cache-control": "no-cache",
-				"postman-token": "be625375-873c-3662-ad2e-e910a88e3d8e"
-			},*/
 			"processData": false,
 			"data": "{\r\n    \"tipo_identificacion\": \"" + tipo_identificacion + "\",\r\n    \"identificacion\": \"" + identificacion + "\"\r\n  }"
 		}
 		$.ajax(settings).done(function (data) {
-			var code ='<div class="table-responsive">'
+			var code = '<div class="table-responsive">'
 			+ '<table id="domiciliosTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'
 			+  '<thead>'
 			+    '<tr>'
@@ -40,20 +35,22 @@ $(document).ready(function(){
 
 
 			for (i = 0; i < data.length; i++) {
-				var base = data[i].precio_productos + data[i].valor_descuento - data[i].precio_domicilio;
+				var total = data[i].precio_productos - data[i].valor_descuento + data[i].precio_domicilio;
 				code += '<tr>'
 							+	 '<td align="center">' + data[i].idDomicilio + '</td>'
 							+	 '<td align="center">' + data[i].fecha + '</td>'
-							+	 '<td align="center">' + base + '</td>'
+							+	 '<td align="center">' + data[i].precio_productos + '</td>'
 							+  '<td align="center">-' + data[i].valor_descuento + '</td>'
 							+	 '<td align="center">+' + data[i].precio_domicilio + '</td>'
-							+	 '<td align="center">' + data[i].precio_productos + '</td>'
+							+	 '<td align="center">' + total + '</td>'
 							+	 '<td align="center">' + data[i].estado + '</td>';
 				if (data[i].justificacion != null){
-					code = code + '<td align="center"> El pedido fue rechazado: \"' +  data[i].justificacion + '\"</td>';
+					code = code + '<td align="center">\"' +  data[i].justificacion + '\"</td>';
 				}else
 					if (data[i].estado == "Recibido") {
-						code += '<td align="center">   -   </td>'
+						code += '<td align="center" class="dropdown">'
+							+ '<button id =' + i + ' type="button" onclick="obtenerProductos(' + data[i].idDomicilio + ');" class="btn btn-success">Ver productos</button>'
+							+ '</td>';
 					}else {
 						code += '<td align="center" class="dropdown">'
 							+ '<button id =' + i + ' type="button" onclick="confirmarRecibido(' + data[i].idDomicilio + ');" class="btn btn-success">Confirmar recibido</button>'
@@ -72,23 +69,16 @@ $(document).ready(function(){
 
 function confirmarRecibido(idDomicilio) {
 	$("#myModal").modal();
-		
+
 		var modalCode = "Estos son los productos de tu pedido<br>";
 		var settingsProductos = {
 			"async": true,
 			"crossDomain": true,
 			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?domicilio=" + idDomicilio,
 			"method": "GET",
-			/*"headers": {
-				"Access-Control-Allow-Headers": "Origin",
-				"cache-control": "no-cache",
-				"content-type": "application/json; charset=utf-8",
-				"postman-token": "80bf795e-976a-86d2-75fc-212b4387f216"
-			}*/
 		}
 
 		$.ajax(settingsProductos).done(function (productos) {
-
 			modalCode = '<div class="table-responsive">'
 			+ '<table id="domiciliosTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'
 			+  '<thead>'
@@ -100,26 +90,23 @@ function confirmarRecibido(idDomicilio) {
 			+    '</tr>'
 			+  '</thead>'
 			+  '<tbody>';
-			
-			console.log(productos);
 			for (i = 0; i < productos.length; i++) {
 				var precio = productos[i].precio * productos[i].cantidad
 				modalCode += '<tr>'
 							+	 '<td align="center">' + productos[i].nombre + '</td>'
 							+	 '<td align="center">' + productos[i].precio + '</td>'
 							+	 '<td align="center">' + productos[i].cantidad + '</td>'
-							+  '<td align="center">-' + precio + '</td>';
+							+  '<td align="center">' + precio + '</td>';
 			}
 
 			modalCode += '</tr></tbody> </table> </div>';
+			$("#modalBody").html(modalCode);
 			});
 
 			var modalButtonsCode =  '<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar :|</button>'
 													 +	'<button type="button" class="btn btn-default" onclick="rechazarDomicilio(' + idDomicilio + ');" class="btn btn-success">Rechazar domicilio :(</button>'
 													 +	'<button type="button" class="btn btn-default" onclick="aceptarDomicilio(' + idDomicilio + ');" class="btn btn-success">Aceptar domicilio :)</button>';
 			$("#modalButtonBody").html(modalButtonsCode);
-			console.log(modalCode);
-			$("#modalBody").html(modalCode);
 }
 
 function rechazarDomicilio(idDomicilio) {
@@ -128,6 +115,45 @@ function rechazarDomicilio(idDomicilio) {
 	var modalButtonsCode = '<button type="button" class="btn btn-default" onclick="confirmarRechazo(' + idDomicilio + ');" class="btn btn-success" data-dismiss="modal">Aceptar</button>';
 	$("#modalButtonBody").html(modalButtonsCode);
 	$("#modalBody").html(justificacionCode);
+}
+
+function obtenerProductos(idDomicilio) {
+	$("#myModal").modal();
+		var modalCode = "Estos son los productos de tu pedido<br>";
+		var settingsProductos = {
+			"async": true,
+			"crossDomain": true,
+			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?domicilio=" + idDomicilio,
+			"method": "GET",
+		}
+
+		$.ajax(settingsProductos).done(function (productos) {
+			modalCode = '<div class="table-responsive">'
+			+ '<table id="domiciliosTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">'
+			+  '<thead>'
+			+    '<tr>'
+			+      '<th>Nombre</th>'
+			+      '<th>Valor unidad</th>'
+			+      '<th>Cantidad</th>'
+			+      '<th>Precio</th>'
+			+    '</tr>'
+			+  '</thead>'
+			+  '<tbody>';
+			for (i = 0; i < productos.length; i++) {
+				var precio = productos[i].precio * productos[i].cantidad
+				modalCode += '<tr>'
+							+	 '<td align="center">' + productos[i].nombre + '</td>'
+							+	 '<td align="center">' + productos[i].precio + '</td>'
+							+	 '<td align="center">' + productos[i].cantidad + '</td>'
+							+  '<td align="center">' + precio + '</td>';
+			}
+
+			modalCode += '</tr></tbody> </table> </div>';
+			$("#modalBody").html(modalCode);
+			});
+
+			var modalButtonsCode =  '<button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>';
+			$("#modalButtonBody").html(modalButtonsCode);
 }
 
 function aceptarDomicilio(idDomicilio) {
@@ -159,32 +185,17 @@ $.ajax(settings).done(function (response) {
 
 function confirmarRechazo(idDomicilio) {
 	var justificacion = document.getElementById('justificacionTextArea').value;
-	/*var rechazoSettings = {
-		"async": true,
-		"crossDomain": true,
-		"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
-		"method": "DELETE",
-		"headers": {
-			"Access-Control-Allow-Origin": "true"
-		},
-		"processData": false,
-		"data": "{\r\n    \"idDomicilio\": \"" + idDomicilio + "\",\r\n    \"justificacion\": \"" + justificacion + "\",\r\n   \"fecha\": \"" + new Date() + "\",\r\n  }"
-		
-		
-	}*/
-	
+
 	var xhr = new XMLHttpRequest();
 		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios";
 		xhr.open("DELETE", url, true);
-		//xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
-		var rechazo = { 
+		var rechazo = {
 			"idDomicilio": idDomicilio,
 			"justificacion": justificacion,
 			"fecha": new Date()
-		}; 
+		};
 		var data = JSON.stringify(rechazo);
 		console.log(data);
-		//alert('Json data: ' +data);
 		xhr.onreadystatechange=function() {
 			if (xhr.readyState==4) {
 				console.log(xhr.responseText);
@@ -200,12 +211,6 @@ function confirmarRechazo(idDomicilio) {
 			}
 		}
 		xhr.send(data);
-
-/*
-	$.ajax(rechazoSettings).done(function (dataRechazo) {
-		var codeRechazo = dataRechazo.message
-		$("#modalBody").html(codeRechazo);
-	});*/
 }
 
 function logout(){
