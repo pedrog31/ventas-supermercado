@@ -1,0 +1,26 @@
+Métodos relacionados con compradores:
+	- GET: Obtener todos los compradores:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores
+  [
+    {
+      "tipo_identificacion": "CC",
+      "identificacion": "10293456",
+      "nombre_completo": "Sebastian Rios",
+      "descuento": false
+    }
+  ]
+
+
+  - PUT: Editar campo de descuento de un comprador:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores
+  Se le envía un JSON con esta estructura:
+  {
+    "tipo_identificacion": "CC",
+  	"identificacion": "10293456"
+	}
+
+	La posible respuesta es:
+  {
+  		"response": "Ok",
+  		"codigo": "68E0EA35"
+	}

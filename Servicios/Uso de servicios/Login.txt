@@ -1,0 +1,28 @@
+Métodos relacionados con login:
+	- POST: Verificar si un usuario (comprador o vendedor) existe en la BD:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/login
+  Se le envía un JSON con esta estructura:
+  {
+    "email":"simon@gmail.com",
+    "pass":"ElSimon"
+	}
+  
+  La contraseña debe estar con el MD5 y las posibles respuestas son:
+  {
+    	"response": "Fail"
+	} Si no existe
+    
+  {
+    "response": "comprador",
+    "nombre": "Sebastian Rios",
+    "tipoIdentificacion": "CC",
+    "identificacion": "10293456",
+    "descuento": false
+  } Si existe y es comprador  
+    
+  {
+    "response": "vendedor",
+    "nombre": "Simon Rodriguez",
+    "tipoIdentificacion": "CC",
+    "identificacion": "43948505"
+  } Si existe y es vendedor

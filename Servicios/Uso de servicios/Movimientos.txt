@@ -1,0 +1,28 @@
+Métodos relacionados con movimientos bancarios:
+  - POST: Obtener todos los movimientos de un usuario
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/movimientos
+
+  Se le envía un JSON con la siguiente estructura:
+  {
+    "tipo_identificacion": "CC",
+    "identificacion": "12948402"
+  }
+
+  La respuesta es:
+  [
+  {
+    "id": 1,
+    "tipo": 0,
+    "valor": "-37100",
+    "numeroCuenta": "5948 5959 5321",
+    "fecha": "2017-10-19 03:14:07"
+  },
+  {
+    "id": 3,
+    "tipo": 1,
+    "valor": "+42100",
+    "numeroCuenta": "5948 5959 5321",
+    "fecha": "2017-10-19 03:14:07"
+  },
+] Si el tipo es 0, quiere decir que fue una salida de dinero, por lo cual debería mostrarse el valor en rojo
+  si es 1 es porque le ingreso dinero, por lo cual debería mostrarse el valor en verde.

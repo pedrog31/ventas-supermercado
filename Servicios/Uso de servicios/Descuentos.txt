@@ -1,0 +1,6 @@
+Métodos relacionados con descuentos:
+  - GET: Devuelve la cantidad de descuentos en el mes X
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/descuentos/X
+  {
+  	"cantidad":5
+  }

@@ -1,0 +1,51 @@
+Métodos relacionados con usuarios:
+  - POST: Insertar un usuario:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/usuarios
+  Se le envía un JSON así:
+  {
+    "tipo_documento": "CC",
+    "documento": "2495056",
+    "correo": "sebas@gmail.com",
+    "contraseña": "Sebas",
+    "nombres": "Sebastian",
+    "apellidos": "Rios",
+    "direccion": "Calle 95A"
+  }
+
+  Las posibles respuestas son:
+  {
+    "response":"Ok",
+    "message":"Usuario creado con éxito"
+  }
+
+  {
+    "response":"Fail",
+    "message":"El usuario Sebastian Rios ya se encuentra registrado."
+  } Esto es cuando se repite la clave primaria, es decir, cuando se repite tipo de documento y documento
+
+  {
+    "response":"Fail",
+    "message":"El correo sebas@gmail.com ya se encuentra en uso."
+  }
+
+
+  - DELETE: Eliminar un usuario
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/usuarios
+  Se le envía un JSON con la siguiente estructura:
+  {
+    "tipo_documento": "CC",
+    "documento": "2495056"
+  }
+
+
+  - PUT: Actualizar datos de usuario
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/usuarios
+  Se le envía un JSON con la siguiente estructura:
+  {
+    "tipo_documento": "CC",
+    "documento": "10293456",
+    "contraseña": "ElBrayan",
+    "nombres": "Brayan",
+    "apellidos": "Suárez Montoya",
+    "direccion": "Calle 123"
+  }

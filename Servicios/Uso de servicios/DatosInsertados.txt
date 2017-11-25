@@ -1,0 +1,18 @@
+Compradores insertados:
+- email: brayan@gmail.com pass: ElBrayan
+- email: pedro@gmail.com pass: ElPedro
+- email: juan@gmail.com pass: JuanDa
+
+Vendedores insertados:
+- email: simon@gmail.com pass: ElSimon
+
+Cuentas bancarias insertadas:
+- Número: 5948 5959 5321 Fecha vencimiento: 2021-06-15 Estado: Activa
+- Número: 5320 9039 5425 Fecha vencimiento: 2020-02-15 Estado: Activa
+- Número: 7495 3734 2724 Fecha vencimiento: 2016-06-15 Estado: Vencida
+- Número: 2938 5759 2248 Fecha vencimiento: 2021-06-15 Estado: Inactiva
+
+Estados de un domicilio:
+- Enviado
+- Recibido
+- Rechazado

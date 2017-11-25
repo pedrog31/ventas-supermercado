@@ -1,0 +1,76 @@
+Métodos relacionados con ventas:
+	- GET: Devuelve todas las ventas del mes número X
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/ventas/X
+  [
+    {
+      "idCompra": 2,
+      "Comprador_tipo_documento": "CC",
+      "Comprador_documento": "10293456",
+      "precio_productos": 150000,
+      "fecha": "2017-10-19 03:14:07",
+      "valor_descuento": 1500
+    }
+  ]
+  Si es domicilio y aún no está en estado de "Recibido" no se devuelve, puesto que no es una venta asegurada
+    
+    
+  - GET: Devuelve la cantidad de ventas en el mes X
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/ventasmes/X
+  {
+    "cantidad":5
+  }
+    
+
+	- POST: Insertar una venta
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/ventas
+  Se le envía un JSON con esta estructura:
+  [
+    "Comprador_tipo_identificacion": "CC",
+  	"Comprador_identificacion": "10293456",
+  	"precio_productos": 150000,
+  	"fecha": "2017-01-19 03:14:07",
+  	"valor_descuento": 0,
+  	"productos": [
+    {
+    	"sku": "7702047016633",
+    	"cantidad": 20
+    },
+    	{
+     		"sku": "7702189017604",
+     		"cantidad": 12
+    	}
+  	]
+	]
+
+  Si es con domicilio agregar una key "domicilio" y el contenido puede ser cualquier cosa, si se paga con cuenta bancaria agregar los keys "numeroCuenta" y "fechaVencimiento" con sus datos correspondientes.
+    
+  Las posibles respuestas son:
+  [
+  	"Está solicitando una cantidad de Mayonesa 1000gr mayor que la existente",
+  	"Está solicitando una cantidad de Cheetos mayor que la existente"
+	]
+
+  [
+    "error":"Saldo insuficiente"
+  ]
+
+  [
+    "error":"No existe una cuenta con dichos datos"
+  ]
+
+  [
+    "response":"Ok",
+    "message":"Venta registrada con éxito"
+  ]
+
+
+  - GET: Obtener productos de la venta con ID X:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?venta=X
+  [
+    {
+      "sku": "7702047016633",
+      "nombre": "Mayonesa 1000gr",
+      "precio": 16000,
+      "cantidad": 2
+    }
+  ]

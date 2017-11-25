@@ -1,0 +1,77 @@
+Métodos relacionados con domicilios:
+  - GET: Obtener todos los domicilios
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios
+  [
+    {
+      "idDomicilio": 1,
+      "Comprador_tipo_documento": "CC",
+      "Comprador_documento": "10293456",
+      "precio_productos": 150000,
+      "fecha": "2017-10-19 03:14:07",
+      "valor_descuento": 1500,
+      "precio_domicilio": 7500,
+      "estado": "Enviado",
+      "justificacion": null
+    }
+  ]
+  si devuelve null en la justificación es porque está en estado Enviado o Recibido
+
+
+  - POST: Obtener domicilios por usuario:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios
+  Se le envía un JSON con esta estructura:
+  {
+    "tipo_identificacion": "CC",
+    "identificacion": "10293456"
+  }
+  Y la respuesta es [] en caso de no tener domicilios, si tiene domicilios sería:
+  [
+    {
+      "idDomicilio": 1,
+      "Comprador_tipo_documento": "CC",
+      "Comprador_documento": "10293456",
+      "precio_productos": 150000,
+      "fecha": "2017-10-19 03:14:07",
+      "valor_descuento": 1500,
+      "precio_domicilio": 7500,
+      "estado": "Enviado",
+      "justificacion": null
+    }
+  ]
+
+
+  - GET: Obtener productos para el domicilio con ID X
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productosBy?domicilio=X
+  [
+    {
+      "sku": "7702047016633",
+      "nombre": "Mayonesa 1000gr",
+      "precio": 16000,
+      "cantidad": 2
+    }
+  ]
+
+
+  - PUT: Notificar que un domicilio ya fue recibido
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios
+  Se le envía un JSON con la siguiente estructura:
+  {
+    "idDomicilio":1
+  }
+
+
+  - POST: Rechazar un domicilio
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/rechazo
+  Se le envía un JSON con la siguiente estructura:
+  {
+    "idDomicilio": 2,
+    "justificacion": "Porque quería hacerlo",
+    "fecha": "2017-11-05 15:28:07"
+  }
+
+  La respuesta es:
+  {
+    "message": "El rechazo del domicilio fue exitoso, fueron devueltos 42100 pesos",
+    "descuento": true
+  } si descuento es true quiere decir que usaron descuento, por lo cual, debe usar
+    nuevamente el servicio web para reasignar un código de descuento al usuario.

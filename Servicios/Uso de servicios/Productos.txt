@@ -1,0 +1,50 @@
+Métodos relacionados con productos:
+	- GET: Obtener todos los productos
+	https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productos
+  [
+    {
+      "sku": "7702047016633",
+      "nombre": "Mayonesa 1000gr",
+      "precio": 16000,
+      "url_foto": "http://www.eurosupermercados.com/wp-content/uploads/2016/06/7702047016633frontPROCESSED.png",
+      "stock": 1
+    }
+  ]
+    
+  	
+  - POST: Insertar un producto:
+	https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productos
+	Se le envía un JSON con esta estructura:
+	{
+    "sku": "7702047016633",
+    "nombre": "Mayonesa 1000gr",
+    "precio": 16000,
+    "url_foto": "http://www.eurosupermercados.com/wp-content/uploads/2016/06/7702047016633frontPROCESSED.png",
+    "stock": 7
+  }
+    
+  Las posibles respuestas son:
+  {
+    "response": "Fail",
+    "message": "El Producto Mayonesa 1000gr ya existe."
+	}
+	
+  {
+    "response": "Ok",
+    "message": "Producto insertado con éxito"
+	}
+
+
+  - PUT: Actualizar stock de un producto:
+  https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/productos
+  Se le envía un JSON con esta estructura:
+  {
+      "sku":"7702047016633",
+      "stock":8
+  }
+
+  La posible respuesta es:
+  {
+    "response": "Ok",
+    "message": "Stock actualizado con éxito"
+  }
