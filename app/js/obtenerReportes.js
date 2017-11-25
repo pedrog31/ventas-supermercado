@@ -70,7 +70,7 @@ function obtenerVentas() {
 						+	i + '.'
 						+  '<br><b>Descuentos usados en el mes: </b>'
 						+  descuentos + '.';
-				
+
 				$("#info").html(info);
 			}
 				$("#info").html(info);
@@ -92,7 +92,7 @@ function generarFactura (idCompra) {
 		success: function (data) {
 			code = '<center>'
           +          '<img src="http://es.www.oppacart.com/assets/img/icon-carrinho.jpg" name="logo" width="140" height="140" border="0" class="img-circle"></a>'
-          +          '<h3 class="media-heading">Productos comprados en la venta ' + idCompra + '</h3>'
+          +          '<h3 class="media-heading">Productos comprados en la venta #' + idCompra + '</h3>'
           +          '</center>'
           +          '<hr>'
           +          '<center>'

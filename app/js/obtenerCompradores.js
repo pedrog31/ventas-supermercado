@@ -58,7 +58,7 @@ $(document).ready(function(){
 function verDomicilios(tipo_identificacion, Identificacion) {
 	sessionStorage.setItem("tipo_identificacion_detalle_domicilio", tipo_identificacion);
 	sessionStorage.setItem("identificacion_detalle_domicilio", Identificacion);
-	window.location="domiciliosC_Admn.html";
+	window.location="domicilioscadmn.html";
 }
 
 

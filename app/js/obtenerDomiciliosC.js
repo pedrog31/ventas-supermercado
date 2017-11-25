@@ -203,13 +203,12 @@ function confirmarRechazo(idDomicilio) {
 				if (jsonResponse.response == "Fail"){
 					alert('Error: '+jsonResponse.message);
 				}else{
-					console.log(jsonResponse);
 					if (jsonResponse.descuento == true) {
 						generarCupon(jsonResponse.message);
 					}else {
 						alert(jsonResponse.message);
+						window.location="domiciliosC.html";
 					}
-					window.location="domiciliosC.html";
 				}
 			}
 		}
@@ -217,6 +216,7 @@ function confirmarRechazo(idDomicilio) {
 }
 
 function generarCupon(mensaje) {
+	console.log(mensaje);
 	var tipo_identificacion = sessionStorage.getItem("tipoID");
 	var Identificacion = sessionStorage.getItem("ID");
 	var xhr = new XMLHttpRequest();
@@ -233,7 +233,8 @@ function generarCupon(mensaje) {
 			console.log(xhr.responseText);
 			var jsonResponse = JSON.parse(xhr.responseText);
 			if (jsonResponse.response == "Ok"){
-				alert(mensaje + 'El cupon a sido asignado exitosamente con el codigo "'+ jsonResponse.codigo + '"');
+				alert(mensaje + ', se te a generado un nuevo cupon de descuento con codigo "'+ jsonResponse.codigo + '"');
+				window.location="domiciliosC.html";
 			}
 		}
 	}
