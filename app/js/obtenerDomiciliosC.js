@@ -112,7 +112,7 @@ function confirmarRecibido(idDomicilio) {
 function rechazarDomicilio(idDomicilio) {
 	var justificacionCode = 'Lamentamos escuchar esto, por favor cuentanos por que no deseas recibir la compra. <br><br>'
 												+ '<textarea id="justificacionTextArea" rows="4" cols="50"> </textarea>';
-	var modalButtonsCode = '<button type="button" class="btn btn-default" onclick="confirmarRechazo(' + idDomicilio + ');" class="btn btn-success" data-dismiss="modal">Aceptar</button>';
+	var modalButtonsCode = '<button type="button" class="btn btn-default" onclick="confirmarRechazo(' + idDomicilio + ');" class="btn btn-success">Aceptar</button>';
 	$("#modalButtonBody").html(modalButtonsCode);
 	$("#modalBody").html(justificacionCode);
 }
@@ -203,14 +203,41 @@ function confirmarRechazo(idDomicilio) {
 				if (jsonResponse.response == "Fail"){
 					alert('Error: '+jsonResponse.message);
 				}else{
-					alert(jsonResponse.message);
-					var codeRechazo = jsonResponse.message;
-					$("#modalBody").html(codeRechazo);
+					console.log(jsonResponse);
+					if (jsonResponse.descuento == true) {
+						generarCupon(jsonResponse.message);
+					}else {
+						alert(jsonResponse.message);
+					}
 					window.location="domiciliosC.html";
 				}
 			}
 		}
 		xhr.send(data);
+}
+
+function generarCupon(mensaje) {
+	var tipo_identificacion = sessionStorage.getItem("tipoID");
+	var Identificacion = sessionStorage.getItem("ID");
+	var xhr = new XMLHttpRequest();
+	var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores";
+	xhr.open("PUT", url, true);
+	var comprador = {
+		"tipo_identificacion": tipo_identificacion,
+		"identificacion": Identificacion
+	};
+	var data = JSON.stringify(comprador);
+	console.log(data);
+	xhr.onreadystatechange=function() {
+		if (xhr.readyState == 4) {
+			console.log(xhr.responseText);
+			var jsonResponse = JSON.parse(xhr.responseText);
+			if (jsonResponse.response == "Ok"){
+				alert(mensaje + 'El cupon a sido asignado exitosamente con el codigo "'+ jsonResponse.codigo + '"');
+			}
+		}
+	}
+	xhr.send(data);
 }
 
 function logout(){

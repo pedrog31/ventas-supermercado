@@ -60,12 +60,12 @@ function verDomicilios(tipo_identificacion, Identificacion) {
 	sessionStorage.setItem("identificacion_detalle_domicilio", Identificacion);
 	window.location="domiciliosC_Admn.html";
 }
-	
+
 
 function generarCupon(tipo_identificacion, Identificacion) {
 		var xhr = new XMLHttpRequest();
 		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/compradores";
-		xhr.open("POST", url, true);
+		xhr.open("PUT", url, true);
 		var comprador = {
 			"tipo_identificacion": tipo_identificacion,
 			"identificacion": Identificacion
@@ -92,16 +92,16 @@ function generarCupon(tipo_identificacion, Identificacion) {
 
 
 function borrar (tipo_identificacion, identificacion){
-	var statusConfirm = confirm("¿Seguro quieres eliminar este usuario?"); 
-	if (statusConfirm == true){ 
+	var statusConfirm = confirm("¿Seguro quieres eliminar este usuario?");
+	if (statusConfirm == true){
 		var xhr = new XMLHttpRequest();
 		var url = "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/usuarios";
 		xhr.open("DELETE", url, true);
 		//xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token');
-		var eliminar_usuario = { 
+		var eliminar_usuario = {
 			"tipo_documento": tipo_identificacion,
 			"documento": identificacion.toString()
-		}; 
+		};
 		var data = JSON.stringify(eliminar_usuario);
 		console.log(data);
 		//alert('Json data: ' +data);

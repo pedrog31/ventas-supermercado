@@ -13,11 +13,11 @@ $(document).ready(function(){
 			"crossDomain": true,
 			"url": "https://vg0oc79lnk.execute-api.us-east-2.amazonaws.com/SuperMercado/domicilios",
 			"method": "GET",
-			"headers": {
+			/*"headers": {
 				"content-type": "application/json; charset=utf-8",
 				"cache-control": "no-cache",
 				"postman-token": "be625375-873c-3662-ad2e-e910a88e3d8e"
-			},
+			},*/
 			"processData": false
 		}
 		$.ajax(settings).done(function (data) {
